@@ -1,5 +1,9 @@
 apply plugin: 'com.android.library'
 
+configurations {
+    javadocDeps
+}
+
 repositories {
     mavenCentral()
 }
@@ -14,7 +18,12 @@ android {
     }
 }
 
+task allJavadoc(dependsOn: ['assembleRelease'], type: Javadoc) { classpath += configurations.javadocDeps }
+
 dependencies {
+    compile 'com.android.support:support-annotations:25.3.1'
+    javadocDeps 'com.android.support:support-annotations:25.3.1'
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
